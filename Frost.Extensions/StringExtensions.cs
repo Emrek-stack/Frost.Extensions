@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -184,5 +185,49 @@ namespace Frost.Extensions
             }
             return stripText;
         }
+
+        public static bool IsValidUrl(this string text)
+        {
+            Regex rx = new Regex(@"http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?");
+            return rx.IsMatch(text);
+        }
+
+        public static string ToMd5Hash(this string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return value;
+            }
+
+            using (MD5 md5 = new MD5CryptoServiceProvider())
+            {
+                byte[] originalBytes = ASCIIEncoding.Default.GetBytes(value);
+                byte[] encodedBytes = md5.ComputeHash(originalBytes);
+                return BitConverter.ToString(encodedBytes).Replace("-", string.Empty);
+            }
+        }
+
+        public static int WordCount(this string input)
+        {
+            var count = 0;
+            try
+            {
+                // Exclude whitespaces, Tabs and line breaks
+                var re = new Regex(@"[^\s]+");
+                var matches = re.Matches(input);
+                count = matches.Count;
+            }
+            catch
+            {
+            }
+            return count;
+        }
+
+        public static bool IsValidIPAddress(this string s)
+        {
+            return Regex.IsMatch(s,
+                    @"\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b");
+        }
+
     }
 }
