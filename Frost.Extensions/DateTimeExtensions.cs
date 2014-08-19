@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Frost.Extensions
 {
@@ -18,6 +19,13 @@ namespace Frost.Extensions
                 seconds,
                 milliseconds,
                 dateTime.Kind);
+        }
+
+        public static string ToIso8601(this DateTime dateTime)
+        {
+            if (dateTime == null)
+                throw new ArgumentNullException("dateTime");
+            return dateTime.ToString(@"yyyy-MM-ddTHH\:mm\:ss.fffffffzzz", CultureInfo.InvariantCulture);
         }
     }
 }
