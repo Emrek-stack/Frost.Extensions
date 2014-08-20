@@ -1,4 +1,4 @@
 Frost.Extensions
 ================
 
-Frost Extensions a .Net Extensions method library. 
+Frost Extensions a .Net Extension methods library. 
