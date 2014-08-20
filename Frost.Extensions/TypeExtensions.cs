@@ -51,5 +51,7 @@ namespace Frost.Extensions
             var c = t.GetConstructors();
             return (t.IsAbstract && t.IsSealed && c.Length == 0);
         }
+
+
     }
 }

@@ -21,20 +21,7 @@ namespace Frost.Extensions
             bf.Serialize(ms, obj);
             return ms.ToArray();
         }
-
-        public static T ToObject<T>(this byte[] bytes)
-        {
-            if (bytes == null)
-                throw new ArgumentNullException("bytes");
-
-            MemoryStream memStream = new MemoryStream();
-            BinaryFormatter binForm = new BinaryFormatter();
-            memStream.Write(bytes, 0, bytes.Length);
-            memStream.Seek(0, SeekOrigin.Begin);
-            object obj = binForm.Deserialize(memStream);
-            return (T)obj;
-        }
-
+        
         public static bool IsNull(this object obj)
         {
             if (obj == null)
@@ -127,6 +114,11 @@ namespace Frost.Extensions
                 destinationType = new NullableConverter(destinationType).UnderlyingType;
 
             return (TU)Convert.ChangeType(source, destinationType);
+        }
+
+        public static object ToNull(this object o)
+        {
+            return null;
         }
 
     }
